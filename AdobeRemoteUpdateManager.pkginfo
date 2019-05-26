@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>_metadata</key>
+	<dict>
+		<key>created_by</key>
+		<string>taz_nz</string>
+		<key>os_version</key>
+		<string>10.14.4</string>
+	</dict>
+	<key>autoremove</key>
+	<false/>
+	<key>catalogs</key>
+	<array>
+		<string>testing</string>
+	</array>
+	<key>installcheck_script</key>
+	<string>#!/bin/bash
+#
+#
+# Created by Taz_NZ, New Zealand 🥝
+# Purpose: Checks for Adobe CC updates
+# Munki nopkg 
+# https://helpx.adobe.com/enterprise/package/help/apps-deployed-without-their-base-versions.html
+
+rum='/usr/local/bin/RemoteUpdateManager --action=list'
+
+if $rum | grep -q "Updates are applicable on the system"; then
+  echo "Found Adobe Updates!"
+  exit 0
+else
+  echo "No Adobe Updates Found"
+  exit 1
+fi</string>
+	<key>minimum_os_version</key>
+	<string>10.4.0</string>
+	<key>name</key>
+	<string>AdobeRemoteUpdateManager</string>
+	<key>postinstall_script</key>
+	<string>#!/bin/bash
+#
+#
+# Created by Taz_NZ, New Zealand 🥝
+# Purpose: Installs available Adobe CC updates
+# Munki nopkg compatible 
+#https://helpx.adobe.com/enterprise/package/help/apps-deployed-without-their-base-versions.html
+
+/usr/local/bin/RemoteUpdateManager --action=install
+
+exit 1</string>
+	<key>unattended_install</key>
+	<true/>
+	<key>version</key>
+	<string>1.0</string>
+</dict>
+</plist>
